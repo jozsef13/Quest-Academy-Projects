@@ -1,12 +1,17 @@
 package prize;
 
-import field.BasketRole;
-
 public class BasketFactory implements BasketFactoryRole {
+
+	private int basketValue;
+
+	public BasketFactory(int basketValue) {
+		super();
+		this.basketValue = basketValue;
+	}
 
 	@Override
 	public BasketRole build() {
-		return new Basket(0);
+		return new Basket(basketValue);
 	}
 
 }

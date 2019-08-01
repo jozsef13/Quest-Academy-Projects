@@ -1,7 +1,5 @@
 package prize;
 
-import field.BasketRole;
-
 public class Basket implements BasketRole {
 
 	private int basketValue;

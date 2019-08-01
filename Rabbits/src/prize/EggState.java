@@ -25,4 +25,9 @@ public class EggState implements PrizeStateRole {
 
 	}
 
+	@Override
+	public void setNextState(PrizeStateRole otherNextState) {
+		nextState = otherNextState;
+	}
+
 }

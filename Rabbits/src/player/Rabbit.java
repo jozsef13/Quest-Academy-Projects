@@ -1,7 +1,7 @@
 package player;
 
-import field.BasketRole;
 import position.PositionStateRole;
+import prize.BasketRole;
 import prize.PrizeRole;
 
 public class Rabbit implements PlayerRole {

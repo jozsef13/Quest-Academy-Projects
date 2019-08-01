@@ -2,9 +2,9 @@ package player;
 
 import java.io.FileNotFoundException;
 
-import field.BasketRole;
 import position.PositionStateRole;
 import prize.BasketFactoryRole;
+import prize.BasketRole;
 import prize.PrizeFactoryRole;
 import prize.PrizeRole;
 

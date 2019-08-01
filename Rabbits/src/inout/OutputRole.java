@@ -4,5 +4,5 @@ public interface OutputRole {
 	
 	public void addMessage(String message);
 	
-	public void displayFile();
+	public void displayConsole();
 }

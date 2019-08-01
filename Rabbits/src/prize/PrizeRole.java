@@ -4,7 +4,7 @@ public interface PrizeRole {
 
 	int getEggsValue();
 
-	void setEggsValue(int otherEggs);
+	void setEggsValue(int otherNumberOfEggs);
 
 	void addEggs();
 

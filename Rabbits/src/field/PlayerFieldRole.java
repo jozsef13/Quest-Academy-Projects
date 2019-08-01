@@ -9,5 +9,9 @@ public interface PlayerFieldRole{
 	void setEggs(int otherEggs);
 
 	void setHighestBasket(int otherBasket);
+	
+	int getEggs();
+
+	int getHighestBasket();
 
 }

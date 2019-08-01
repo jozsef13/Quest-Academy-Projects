@@ -10,8 +10,4 @@ public interface GameFieldRole{
 
 	void removePlayer(PlayerRole player);
 
-	int getEggs();
-
-	int getHighestBasket();
-
 }

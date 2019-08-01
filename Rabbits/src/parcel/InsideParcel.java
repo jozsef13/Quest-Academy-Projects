@@ -16,6 +16,7 @@ public class InsideParcel implements ParcelRole{
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
 		currentState.searchForPrizeBy(player);
+		currentState = currentState.next();
 	}
 
 	@Override

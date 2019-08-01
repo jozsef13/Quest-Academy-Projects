@@ -8,4 +8,6 @@ public interface PrizeStateRole {
 
 	void searchForPrizeBy(PlayerRole player);
 
+	void setNextState(PrizeStateRole otherNextState);
+
 }

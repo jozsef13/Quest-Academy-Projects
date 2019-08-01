@@ -2,15 +2,10 @@ package prize;
 
 import player.PlayerRole;
 
-public class PirzeLessState implements PrizeStateRole {
+public class PrizeLessState implements PrizeStateRole {
 
 	private PrizeStateRole nextState;
 	
-	public PirzeLessState(PrizeStateRole nextState) {
-		super();
-		this.nextState = nextState;
-	}
-
 	@Override
 	public PrizeStateRole next() {
 		
@@ -19,13 +14,12 @@ public class PirzeLessState implements PrizeStateRole {
 
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
-
-
+		//does nothing
 	}
 
 	@Override
-	public void setNextState(PrizeStateRole otherNextState) {
-		nextState = otherNextState;
+	public void setNextState(PrizeStateRole nextState) {
+		this.nextState = nextState;
 	}
 
 }

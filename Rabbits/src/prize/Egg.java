@@ -2,26 +2,26 @@ package prize;
 
 public class Egg implements PrizeRole {
 
-	private int eggValue;
+	private int numberOfEggs;
 
-	public Egg(int eggValue) {
+	public Egg(int numberOfEggs) {
 		super();
-		this.eggValue = eggValue;
+		this.numberOfEggs = numberOfEggs;
 	}
 
 	@Override
 	public int getEggsValue() {
-		return eggValue;
+		return numberOfEggs;
 	}
 
 	@Override
-	public void setEggsValue(int otherEggs) {
-		eggValue += otherEggs;
+	public void setEggsValue(int otherNumberOfEggs) {
+		numberOfEggs += otherNumberOfEggs;
 	}
 
 	@Override
 	public void addEggs() {
-		eggValue++;
+		numberOfEggs++;
 	}
 
 }

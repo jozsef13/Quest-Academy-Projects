@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import player.PlayerRole;
+import prize.BasketRole;
 import prize.PrizeRole;
 
 public class GameField implements GameFieldRole, PlayerFieldRole {

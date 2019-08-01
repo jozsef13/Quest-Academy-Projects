@@ -17,7 +17,7 @@ public class Output implements OutputRole{
 	}
 
 	@Override
-	public void displayFile() {
+	public void displayConsole() {
 		for(String message : messages) {
 			System.out.println(message);
 		}

@@ -1,7 +1,5 @@
 package prize;
 
-import java.io.FileNotFoundException;
-
 public class PrizeLessStateFactory implements PrizelessStateFactoryRole {
 
 

@@ -14,4 +14,19 @@ public interface PlayerRole {
 
 	int getY();
 
+	void updateIcon();
+
+	void addLife(int value);
+
+	boolean isDead();
+
+	void decreaseHealth();
+
+	void changeDirection();
+
+	boolean hasHealth();
+
+	void jump();
+
+
 }

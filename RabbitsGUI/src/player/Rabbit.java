@@ -1,10 +1,12 @@
 package player;
 
+import java.io.Serializable;
+
 import position.PositionStateRole;
 import prize.BasketRole;
 import prize.PrizeRole;
 
-public class Rabbit implements PlayerRole {
+public class Rabbit implements PlayerRole, Serializable {
 
 	private PositionStateRole positionState;
 	private BasketRole basket;
@@ -48,6 +50,45 @@ public class Rabbit implements PlayerRole {
 	@Override
 	public int getY() {
 		return positionState.getY();
+	}
+
+	@Override
+	public void updateIcon() {
+		positionState.updateIcon();
+		
+	}
+
+	@Override
+	public boolean isDead() {
+		return true;
+	}
+
+	@Override
+	public void decreaseHealth() {
+		// nothing
+		
+	}
+
+	@Override
+	public void changeDirection() {
+		// nothing
+		
+	}
+
+	@Override
+	public void addLife(int value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean hasHealth() {
+		return false;
+	}
+
+	@Override
+	public void jump() {
+		positionState.move();
 	}
 
 }

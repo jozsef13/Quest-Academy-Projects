@@ -1,6 +1,8 @@
 package prize;
 
-public class EggFactory implements PrizeFactoryRole {
+import java.io.Serializable;
+
+public class EggFactory implements PrizeFactoryRole, Serializable {
 
 	private int numberOfEggs;
 

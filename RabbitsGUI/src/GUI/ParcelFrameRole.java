@@ -1,13 +1,16 @@
 package GUI;
 
+import java.awt.Color;
+
+import javax.swing.JRadioButton;
 import javax.swing.border.Border;
 
 public interface ParcelFrameRole {
 
 	void setBorder(Border border);
 
-	void clearPlayer();
+	void addPlayers(String imageFile, Color randomColor);
 
-	void addPlayers(String imageFile);
+	void clearPlayer();
 
 }

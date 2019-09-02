@@ -1,6 +1,8 @@
 package inout;
 
-public class OutputFactory implements OutputFactoryRole {
+import java.io.Serializable;
+
+public class OutputFactory implements OutputFactoryRole,Serializable {
 
 	@Override
 	public OutputRole build() {

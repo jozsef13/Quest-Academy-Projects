@@ -4,6 +4,6 @@ import java.io.FileNotFoundException;
 
 public interface PositionFactoryRole {
 
-	PositionRole build(int x, int y) throws FileNotFoundException;
+	PositionRole build(int x, int y);
 
 }

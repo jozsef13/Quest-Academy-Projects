@@ -6,6 +6,6 @@ import position.PositionStateRole;
 
 public interface PlayerFactoryRole {
 
-	PlayerRole build(PositionStateRole positionState) throws FileNotFoundException;
+	PlayerRole build(PositionStateRole positionState);
 
 }

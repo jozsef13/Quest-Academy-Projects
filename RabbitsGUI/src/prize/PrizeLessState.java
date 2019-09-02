@@ -1,8 +1,10 @@
 package prize;
 
+import java.io.Serializable;
+
 import player.PlayerRole;
 
-public class PrizeLessState implements PrizeStateRole {
+public class PrizeLessState implements PrizeStateRole, Serializable {
 
 	private PrizeStateRole nextState;
 	

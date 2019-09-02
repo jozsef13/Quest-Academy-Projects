@@ -1,5 +1,6 @@
 package field;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import player.PlayerRole;
 import prize.BasketRole;
 import prize.PrizeRole;
 
-public class GameField implements GameFieldRole, PlayerFieldRole {
+public class GameField implements GameFieldRole, PlayerFieldRole, Serializable {
 
 	private List<PlayerRole> playersOnField;
 	private PrizeRole eggs;
@@ -27,6 +28,10 @@ public class GameField implements GameFieldRole, PlayerFieldRole {
 
 		for (PlayerRole player : clonePlayersOnField) {
 			player.playTurn();
+		}
+		
+		for (PlayerRole player : clonePlayersOnField) {
+			player.updateIcon();
 		}
 		
 	}

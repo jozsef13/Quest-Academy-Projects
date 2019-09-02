@@ -9,7 +9,6 @@ import prize.PrizeFactoryRole;
 
 public interface GameFieldFactoryRole {
 
-	GameField build(List<PlayerRole> playersOnField, PrizeFactoryRole eggFactory, BasketFactoryRole basketFactory)
-			throws FileNotFoundException;
+	GameField build(List<PlayerRole> playersOnField, PrizeFactoryRole eggFactory, BasketFactoryRole basketFactory);
 
 }

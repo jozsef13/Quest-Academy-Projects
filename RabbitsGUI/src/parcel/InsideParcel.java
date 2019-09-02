@@ -1,10 +1,12 @@
 package parcel;
 
+import java.io.Serializable;
+
 import field.PlayerFieldRole;
 import player.PlayerRole;
 import prize.PrizeStateRole;
 
-public class InsideParcel implements ParcelRole{
+public class InsideParcel implements ParcelRole, Serializable{
 
 	PrizeStateRole currentState;
 	

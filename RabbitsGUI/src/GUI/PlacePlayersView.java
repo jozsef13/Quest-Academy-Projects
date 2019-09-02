@@ -63,16 +63,12 @@ public class PlacePlayersView extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					int x = Integer.parseInt(xText.getText());
-					int y = Integer.parseInt(yText.getText());
-					xText.setText("");
-					yText.setText("");
-					controller.addPlayersAt(x, y);
-					gameView.setVisible(true);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				int x = Integer.parseInt(xText.getText());
+				int y = Integer.parseInt(yText.getText());
+				xText.setText("");
+				yText.setText("");
+				controller.addPlayersAt(x, y);
+				gameView.setVisible(true);
 			}
 		});
 		

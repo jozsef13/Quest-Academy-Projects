@@ -1,8 +1,10 @@
 package main;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.List;
 
+import GUI.GUIController;
 import GUI.GameViewRole;
 import field.GameFieldFactory;
 import field.GameFieldFactoryRole;
@@ -22,6 +24,7 @@ import parcel.ParcelRole;
 import player.PlayerFactoryRole;
 import player.PlayerRole;
 import player.RabbitFactory;
+import player.RabbitWithHealthFactory;
 import position.PositionFactory;
 import position.PositionFactoryRole;
 import position.PositionRole;
@@ -32,13 +35,15 @@ import prize.BasketFactory;
 import prize.BasketFactoryRole;
 import prize.EggFactory;
 import prize.EggStateFactory;
+import prize.HealthFactory;
+import prize.HealthFactoryRole;
 import prize.PrizeFactoryRole;
 import prize.PrizeLessStateFactory;
 import prize.PrizeStateFactoryRole;
 import prize.PrizeStateRole;
 import prize.PrizelessStateFactoryRole;
 
-public class GameFactory implements GameFactoryRole {
+public class GameFactory implements GameFactoryRole, Serializable {
 
 	private int rows;
 	private int columns;
@@ -48,17 +53,19 @@ public class GameFactory implements GameFactoryRole {
 	private List<PlayerRole> playersOnField;
 	private BasketFactoryRole basketFactory;
 	private PrizeFactoryRole eggFactory;
+	private GUIController guiController;
+	private HealthFactoryRole healthFactory;
 
-	public GameFactory(int rows, int columns, GameViewRole gameView, List<PlayerRole> playersOnField) {
+	public GameFactory(int rows, int columns, GUIController controller, List<PlayerRole> playersOnField) {
 		super();
 		this.rows = rows;
 		this.columns = columns;
-		this.gameView = gameView;
+		this.guiController = controller;
 		this.playersOnField = playersOnField;
 	}
 
 	@Override
-	public Game build() throws FileNotFoundException {
+	public Game build(){
 
 		parcel = new ParcelRole[rows + 2][columns + 2];
 
@@ -68,6 +75,7 @@ public class GameFactory implements GameFactoryRole {
 
 		basketFactory = new BasketFactory(0);
 		eggFactory = new EggFactory(0);
+		healthFactory = new HealthFactory(1);
 		OutputFactoryRole outputFactory = new OutputFactory();
 		OutputRole output = outputFactory.build();
 		GameFieldFactoryRole gameFieldFactory = new GameFieldFactory();
@@ -93,33 +101,32 @@ public class GameFactory implements GameFactoryRole {
 	}
 	
 	@Override
-	public void addPalyers(int x, int y) throws FileNotFoundException {
+	public void addPalyers(int x, int y){
 		
 		ParcelFieldFactoryRole parcelFieldFactory = new ParcelFieldFactory();
 		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
-		PositionFactoryRole positionFactory = new PositionFactory(parcelField, gameView);
+		PositionFactoryRole positionFactory = new PositionFactory(parcelField, guiController);
 		PositionStateFactoryRole positionStateFactory = new PositionStateFactory();
 		PlayerFactoryRole rabbitFactory = new RabbitFactory(basketFactory, eggFactory);
 		
-		gameView.addPlayerAt(x, y);
 		PositionRole position = positionFactory.build(x, y);
+		guiController.setRandomColor(position.getRandomColor());
 		PositionStateRole positionState = positionStateFactory.build(position);
 		playersOnField.add(rabbitFactory.build(positionState));
 	}
 	
 	@Override
-	public void addEggs(int prizeX, int prizeY, int prizeValue) throws FileNotFoundException {
+	public void addEggs(int prizeX, int prizeY, int prizeValue){
 		
-		PrizeStateFactoryRole eggStateFactory = new EggStateFactory(gameView);
+		PrizeStateFactoryRole eggStateFactory = new EggStateFactory(guiController);
 		
-		gameView.addPrizesAt(prizeX, prizeY, prizeValue);
 		PrizeStateRole eggState = eggStateFactory.build(prizeValue);
 		eggState.setNextState(prizelessState);
 		parcel[prizeX][prizeY].setPrizeState(eggState);
 
 	}
 
-	public void addOutsideParcel() throws FileNotFoundException {
+	public void addOutsideParcel(){
 		
 		OutsideParcelFactoryRole outsideParcelFactory = new OutsideParcelFactory();
 		
@@ -136,7 +143,7 @@ public class GameFactory implements GameFactoryRole {
 
 	}
 
-	public void addInsideParcel() throws FileNotFoundException {
+	public void addInsideParcel(){
 		
 		PrizelessStateFactoryRole prizelessStateFactory = new PrizeLessStateFactory();
 		ParcelFactoryRole insideParcelFactory = new InsideParcelFactory();
@@ -149,6 +156,31 @@ public class GameFactory implements GameFactoryRole {
 				parcel[i][j] = insideParcelFactory.build(prizelessState);
 			}
 		}
+	}
+
+	@Override
+	public void addPalyersWithHealth(int x, int y) {
+		ParcelFieldFactoryRole parcelFieldFactory = new ParcelFieldFactory();
+		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
+		PositionFactoryRole positionFactory = new PositionFactory(parcelField, guiController);
+		PositionStateFactoryRole positionStateFactory = new PositionStateFactory();
+		PlayerFactoryRole rabbitWithHealthFactory = new RabbitWithHealthFactory(basketFactory, eggFactory, healthFactory);
+		
+		PositionRole position = positionFactory.build(x, y);
+		guiController.setRandomColor(position.getRandomColor());
+		PositionStateRole positionState = positionStateFactory.build(position);
+		playersOnField.add(rabbitWithHealthFactory.build(positionState));
+		
+	}
+
+	@Override
+	public void addHealth(int x, int y, int prizeValue) {
+		PrizeStateFactoryRole healthStateFactory = new HealthStateFactory(guiController);
+		
+		PrizeStateRole healthState = healthStateFactory.build(prizeValue);
+		healthState.setNextState(prizelessState);
+		parcel[x][y].setPrizeState(healthState);
+		
 	}
 
 }

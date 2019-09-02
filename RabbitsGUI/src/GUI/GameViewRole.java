@@ -1,12 +1,14 @@
 package GUI;
 
+import java.awt.Color;
+
 import main.Game;
 
 public interface GameViewRole {
 
-	void addPrizesAt(int prizeX, int prizeY, int prizeValue);
+	void addEggsAt(int prizeX, int prizeY, int prizeValue);
 
-	void addPlayerAt(int x, int y);
+	void addPlayerAt(int x, int y, Color randomColor);
 
 	void clearPlayerAt(int x, int y);
 

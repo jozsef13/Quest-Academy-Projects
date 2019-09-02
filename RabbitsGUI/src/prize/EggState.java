@@ -1,20 +1,23 @@
 package prize;
 
+import java.io.Serializable;
+
+import GUI.GUIController;
 import GUI.GameViewRole;
 import player.PlayerRole;
 
-public class EggState implements PrizeStateRole {
+public class EggState implements PrizeStateRole,Serializable {
 
 	private PrizeStateRole nextState;
 	private int value;
-	private GameViewRole gameView;
-
-	public EggState(int value, GameViewRole gameView) {
+	private GUIController controller;
+	
+	public EggState(int value, GUIController controller) {
 		super();
 		this.value = value;
-		this.gameView = gameView;
+		this.controller = controller;
 	}
-	
+
 	@Override
 	public void setNextState(PrizeStateRole nextState) {
 		this.nextState = nextState;
@@ -28,7 +31,7 @@ public class EggState implements PrizeStateRole {
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
 		player.addToBasket(value);
-		gameView.clearPrizeAt(player.getX(), player.getY());
+		controller.clearPrizeAt(player.getX(), player.getY());
 	}
 
 }

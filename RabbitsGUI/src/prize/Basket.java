@@ -1,6 +1,8 @@
 package prize;
 
-public class Basket implements BasketRole {
+import java.io.Serializable;
+
+public class Basket implements BasketRole, Serializable {
 
 	private int basketValue;
 

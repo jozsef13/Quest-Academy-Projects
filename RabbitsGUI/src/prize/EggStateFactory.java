@@ -1,21 +1,22 @@
 package prize;
 
-import java.io.FileNotFoundException;
+import java.io.Serializable;
 
+import GUI.GUIController;
 import GUI.GameViewRole;
 
-public class EggStateFactory implements PrizeStateFactoryRole {
+public class EggStateFactory implements PrizeStateFactoryRole, Serializable {
 
-	private GameViewRole gameView;
-	
-	public EggStateFactory(GameViewRole gameView) {
+	private GUIController controller;
+
+	public EggStateFactory(GUIController controller) {
 		super();
-		this.gameView = gameView;
+		this.controller = controller;
 	}
 
 	@Override
-	public PrizeStateRole build(int value) throws FileNotFoundException {
-		return new EggState(value, gameView);
+	public PrizeStateRole build(int value){
+		return new EggState(value, controller);
 	}
 
 }

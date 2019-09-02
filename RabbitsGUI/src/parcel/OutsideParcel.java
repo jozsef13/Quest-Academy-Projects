@@ -1,10 +1,12 @@
 package parcel;
 
+import java.io.Serializable;
+
 import field.PlayerFieldRole;
 import player.PlayerRole;
 import prize.PrizeStateRole;
 
-public class OutsideParcel implements ParcelRole {
+public class OutsideParcel implements ParcelRole, Serializable {
 
 	private PlayerFieldRole field;
 
@@ -14,9 +16,17 @@ public class OutsideParcel implements ParcelRole {
 
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
-		field.removePlayer(player);
-		field.setEggs(player.getEggs());
-		field.setHighestBasket(player.getBasket());
+		if(player.isDead())
+		{
+			field.removePlayer(player);
+			field.setEggs(player.getEggs());
+			field.setHighestBasket(player.getBasket());
+		}
+		else
+		{
+			player.decreaseHealth();
+			player.changeDirection();
+		}
 	}
 
 	@Override

@@ -1,9 +1,11 @@
 package field;
 
+import java.io.Serializable;
+
 import parcel.ParcelRole;
 import player.PlayerRole;
 
-public class ParcelField implements ParcelFieldRole {
+public class ParcelField implements ParcelFieldRole, Serializable {
 
 	private ParcelRole parcel[][];
 

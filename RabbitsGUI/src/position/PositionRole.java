@@ -1,5 +1,7 @@
 package position;
 
+import java.awt.Color;
+
 import player.PlayerRole;
 
 public interface PositionRole {
@@ -25,5 +27,9 @@ public interface PositionRole {
 	int getX();
 	
 	int getY();
+
+	void updateIcon();
+
+	Color getRandomColor();
 
 }

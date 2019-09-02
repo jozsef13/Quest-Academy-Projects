@@ -6,6 +6,6 @@ import prize.PrizeStateRole;
 
 public interface ParcelFactoryRole {
 
-	ParcelRole build(PrizeStateRole currentState) throws FileNotFoundException;
+	ParcelRole build(PrizeStateRole currentState);
 
 }

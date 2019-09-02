@@ -29,8 +29,6 @@ public class PlacePrizeView extends JFrame {
 	private JTextField prizeYText;
 	private JButton startGameButton;
 	private GameView gameView;
-	private JLabel setNumberOfEggs;
-	private JTextField numberOfEggsText;
 
 	public PlacePrizeView(GUIController controller, GameView gameView) throws HeadlessException {
 		super();
@@ -75,18 +73,14 @@ public class PlacePrizeView extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				try {
-					int prizeValue = Integer.parseInt(prizeValueText.getText());
-					int prizeX = Integer.parseInt(prizeXText.getText());
-					int prizeY = Integer.parseInt(prizeYText.getText());
-					controller.addEggsAt(prizeX, prizeY, prizeValue);
-					prizeValueText.setText("");
-					prizeXText.setText("");
-					prizeYText.setText("");
-					gameView.setVisible(true);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				int prizeValue = Integer.parseInt(prizeValueText.getText());
+				int prizeX = Integer.parseInt(prizeXText.getText());
+				int prizeY = Integer.parseInt(prizeYText.getText());
+				controller.addEggsAt(prizeX, prizeY, prizeValue);
+				prizeValueText.setText("");
+				prizeXText.setText("");
+				prizeYText.setText("");
+				gameView.setVisible(true);
 			}
 		});
 

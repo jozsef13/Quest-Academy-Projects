@@ -1,8 +1,10 @@
 package position;
 
+import java.io.Serializable;
+
 import player.PlayerRole;
 
-public class MoveToEastState implements PositionStateRole {
+public class MoveToEastState implements PositionStateRole, Serializable {
 
 	private PositionRole innerPosition;
 	private PositionStateRole nextState;
@@ -44,6 +46,12 @@ public class MoveToEastState implements PositionStateRole {
 	@Override
 	public int getY() {
 		return innerPosition.getY();
+	}
+
+	@Override
+	public void updateIcon() {
+		innerPosition.updateIcon();
+		
 	}
 
 }

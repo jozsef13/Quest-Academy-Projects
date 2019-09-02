@@ -1,8 +1,9 @@
 package inout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Output implements OutputRole{
+public class Output implements OutputRole,Serializable{
 	
 	private ArrayList<String> messages;
 

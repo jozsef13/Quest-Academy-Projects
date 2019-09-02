@@ -1,22 +1,36 @@
 package position;
 
+import java.awt.Color;
+import java.io.Serializable;
+import java.util.Random;
+
+import GUI.GUIController;
 import GUI.GameViewRole;
 import field.ParcelFieldRole;
 import player.PlayerRole;
 
-public class Position implements PositionRole {
+public class Position implements PositionRole, Serializable {
 
 	private int x;
 	private int y;
 	private ParcelFieldRole field;
-	private GameViewRole gameView;
+	private Color randomColor;
+	private GUIController controller;
 
-	public Position(int x, int y, ParcelFieldRole field, GameViewRole gameView) {
+	public Position(int x, int y, ParcelFieldRole field, GUIController otherController) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.field = field;
-		this.gameView = gameView;
+		this.controller = otherController;
+		
+		Random rand = new Random();
+
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+
+		randomColor = new Color(r, g, b);
 	}
 
 	public int getX() {
@@ -34,34 +48,26 @@ public class Position implements PositionRole {
 
 	@Override
 	public void moveSouth() {
-		gameView.clearPlayerAt(x, y);
-		System.out.println("sud");
+		controller.clearPlayerAt(x, y);
 		x++;
-		gameView.addPlayerAt(x, y);
 	}
 
 	@Override
 	public void moveNorth() {
-		gameView.clearPlayerAt(x, y);
-		System.out.println("nord");
+		controller.clearPlayerAt(x, y);
 		x--;
-		gameView.addPlayerAt(x, y);
 	}
 
 	@Override
 	public void moveEast() {
-		gameView.clearPlayerAt(x, y);
-		System.out.println("est");
+		controller.clearPlayerAt(x, y);
 		y++;
-		gameView.addPlayerAt(x, y);
 	}
 
 	@Override
 	public void moveWest() {
-		gameView.clearPlayerAt(x, y);
-		System.out.println("vest");
+		controller.clearPlayerAt(x, y);
 		y--;
-		gameView.addPlayerAt(x, y);
 	}
 
 	@Override
@@ -82,6 +88,16 @@ public class Position implements PositionRole {
 	@Override
 	public boolean isOnEastBorder() {
 		return y == field.getMaxY();
+	}
+
+	@Override
+	public void updateIcon() {
+		controller.addPlayersOnGameView(x, y, randomColor);
+	}
+	
+	@Override
+	public Color getRandomColor() {
+		return randomColor;
 	}
 
 }

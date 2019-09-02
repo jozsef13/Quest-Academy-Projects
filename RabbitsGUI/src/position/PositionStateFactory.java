@@ -1,11 +1,12 @@
 package position;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
-public class PositionStateFactory implements PositionStateFactoryRole {
+public class PositionStateFactory implements PositionStateFactoryRole,Serializable {
 
 	@Override
-	public PositionStateRole build(PositionRole innerPosition) throws FileNotFoundException {
+	public PositionStateRole build(PositionRole innerPosition){
 		PositionStateRole moveToNorthState = new MoveToNorthState(innerPosition);
 		PositionStateRole moveToEastState = new MoveToEastState(innerPosition);
 		PositionStateRole moveToWestState = new MoveToWestState(innerPosition);
@@ -23,7 +24,6 @@ public class PositionStateFactory implements PositionStateFactoryRole {
 				return currentPositionState;
 			currentPositionState = currentPositionState.next();
 		}
-	
 	}
 
 	private void wireStates(PositionStateRole moveToNorthState, PositionStateRole moveToEastState, PositionStateRole moveToWestState, PositionStateRole moveToSouthState) {

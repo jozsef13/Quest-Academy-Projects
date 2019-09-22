@@ -7,9 +7,12 @@ import java.io.Serializable;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
+
+import prize.HealthStateFactory;
+import prize.PrizeStateFactoryRole;
 
 public class HealthItem extends JFrame implements ItemTypeRole, Serializable {
 
@@ -23,7 +26,6 @@ public class HealthItem extends JFrame implements ItemTypeRole, Serializable {
 		y = y1;
 		setTitle("Add value to the prize");
 		setBounds(300, 200, 500, 150);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		JPanel panel = new JPanel();
 
 		getContentPane().add(panel);
@@ -36,15 +38,22 @@ public class HealthItem extends JFrame implements ItemTypeRole, Serializable {
 		panel.add(prizeValueText);
 		
 		JButton addValueButton = new JButton("Add");
-		
+		JFrame healthView = this;
 		addValueButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				prizeValue = Integer.parseInt(prizeValueText.getText());
-				prizeValueText.setText("");
-				controller.addHealthAt(x, y, prizeValue);
-				setVisible(false);
+				try {
+					prizeValue = Integer.parseInt(prizeValueText.getText());
+					prizeValueText.setText("");
+					PrizeStateFactoryRole healthStateFactory = new HealthStateFactory();
+					controller.addPrizeAt(x, y, prizeValue, "src/health.gif", healthStateFactory);
+					setVisible(false);
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(healthView, "Please type only digits in the fields!", "Number input error!", JOptionPane.ERROR_MESSAGE);
+					setVisible(true);
+				}
+				
 			}
 		});
 		

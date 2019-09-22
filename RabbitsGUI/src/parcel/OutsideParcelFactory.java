@@ -1,9 +1,8 @@
 package parcel;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
+import GUI.GUIController;
 
-public class OutsideParcelFactory implements OutsideParcelFactoryRole, Serializable {
+public class OutsideParcelFactory implements OutsideParcelFactoryRole {
 
 	@Override
 	public ParcelRole build(){

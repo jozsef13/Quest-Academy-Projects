@@ -1,31 +1,34 @@
 package player;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-
 import position.PositionStateRole;
 import prize.BasketFactoryRole;
 import prize.BasketRole;
 import prize.PrizeFactoryRole;
-import prize.PrizeRole;
+import prize.EggRole;
+import prize.HealthFactoryRole;
+import prize.HealthRole;
 
-public class RabbitFactory implements PlayerFactoryRole, Serializable {
+public class RabbitFactory implements PlayerFactoryRole {
 
 	private BasketFactoryRole basketFactory;
 	private PrizeFactoryRole prizeFactory;
+	private HealthFactoryRole healthPrizeFactory;
 
-	public RabbitFactory(BasketFactoryRole basketFactory, PrizeFactoryRole prizeFactory) {
+	public RabbitFactory(BasketFactoryRole basketFactory, PrizeFactoryRole prizeFactory,
+			HealthFactoryRole healthPrizeFactory) {
 		super();
 		this.basketFactory = basketFactory;
 		this.prizeFactory = prizeFactory;
+		this.healthPrizeFactory = healthPrizeFactory;
 	}
 
 	@Override
-	public PlayerRole build(PositionStateRole positionState){
+	public PlayerRole build(PositionStateRole positionState, int playerNumber){
 		
 		BasketRole basket = basketFactory.build();
-		PrizeRole eggs = prizeFactory.build();
-		return new Rabbit(positionState, basket , eggs );
+		EggRole eggs = prizeFactory.build();
+		HealthRole health = healthPrizeFactory.build();
+		return new Rabbit(positionState, basket , eggs , playerNumber, health);
 	}
 
 }

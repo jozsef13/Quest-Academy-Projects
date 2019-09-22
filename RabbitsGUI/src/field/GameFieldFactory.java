@@ -1,23 +1,22 @@
 package field;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.List;
 
+import player.EnemyRole;
 import player.PlayerRole;
 import prize.BasketFactoryRole;
 import prize.BasketRole;
 import prize.PrizeFactoryRole;
-import prize.PrizeRole;
+import prize.EggRole;
 
-public class GameFieldFactory implements GameFieldFactoryRole, Serializable{
+public class GameFieldFactory implements GameFieldFactoryRole{
 
 	@Override
-	public GameField build(List<PlayerRole> playersOnField, PrizeFactoryRole eggFactory, BasketFactoryRole basketFactory){
+	public GameField build(List<PlayerRole> playersOnField, PrizeFactoryRole eggFactory, BasketFactoryRole basketFactory, List<EnemyRole> enemiesOnField){
 		
-		PrizeRole eggs = eggFactory.build();
+		EggRole eggs = eggFactory.build();
 		BasketRole basket = basketFactory.build();
-		return new GameField(playersOnField, eggs, basket );
+		return new GameField(playersOnField, eggs, basket, enemiesOnField);
 	}
 
 }

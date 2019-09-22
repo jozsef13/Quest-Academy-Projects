@@ -1,15 +1,13 @@
 package parcel;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-
+import GUI.GUIController;
 import prize.PrizeStateRole;
 
-public class InsideParcelFactory implements ParcelFactoryRole, Serializable {
+public class InsideParcelFactory implements ParcelFactoryRole {
 
 	@Override
-	public ParcelRole build(PrizeStateRole currentState){
-		return new InsideParcel(currentState);
+	public ParcelRole build(PrizeStateRole currentState, TrapStateRole trapState){
+		return new InsideParcel(currentState, trapState);
 	}
 
 }

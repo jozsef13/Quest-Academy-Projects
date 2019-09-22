@@ -1,25 +1,39 @@
 package player;
 
+import java.awt.Color;
 import java.io.Serializable;
+import java.util.Random;
 
 import position.PositionStateRole;
 import prize.BasketRole;
 import prize.HealthRole;
-import prize.PrizeRole;
+import prize.EggRole;
 
 public class RabbitWithHealth implements PlayerRole, Serializable {
 
 	private PositionStateRole positionState;
 	private BasketRole basket;
-	private PrizeRole eggs;
+	private EggRole eggs;
 	private HealthRole health;
+	private int playerNumber;
+	private Color randomColor;
+	private String status = "Alive";
 
-	public RabbitWithHealth(PositionStateRole positionState, BasketRole basket, PrizeRole eggs, HealthRole health) {
+	public RabbitWithHealth(PositionStateRole positionState, BasketRole basket, EggRole eggs, HealthRole health, int playerNumber2) {
 		super();
 		this.positionState = positionState;
 		this.basket = basket;
 		this.eggs = eggs;
 		this.health = health;
+		this.playerNumber = playerNumber2;
+		
+		Random rand = new Random();
+
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+
+		randomColor = new Color(r, g, b);
 	}
 
 	@Override
@@ -36,8 +50,8 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public int getEggs() {
-		return eggs.getEggsValue();
+	public int getPrize() {
+		return eggs.getValue();
 	}
 
 	@Override
@@ -56,19 +70,10 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public void updateIcon() {
-		positionState.updateIcon();
-		
-	}
-
-	@Override
 	public void addLife(int value) {
 		health.addLife(value);
 	}
-
-	public int getNumberOfLifes() {
-		return health.getLifes();
-	}
+	
 
 	@Override
 	public boolean isDead() {
@@ -76,8 +81,8 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public void decreaseHealth() {
-		health.decreaseLifes();
+	public void decreaseHealth(int damage) {
+		health.decreaseHealth(damage);
 	}
 
 	@Override
@@ -87,13 +92,38 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 
 	@Override
 	public boolean hasHealth() {
+		return !health.lifeIsOver();
+	}
+
+	@Override
+	public String[] setInfoData() {
+		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status};
+		
+		return infoData;
+	}
+	
+	@Override
+	public Color getRandomColor() {
+		return randomColor;
+	}
+	
+	@Override
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+
+	@Override
+	public String getIcon() {
+		return "src/rabbitHealth.gif";
+	}
+
+	@Override
+	public boolean hasSpecialHealth() {
 		return true;
 	}
 
 	@Override
-	public void jump() {
-		positionState.move();
+	public void setStatus(String string) {
+		status = string;
 	}
-	
-	
 }

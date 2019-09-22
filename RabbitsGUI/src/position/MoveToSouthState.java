@@ -47,11 +47,9 @@ public class MoveToSouthState implements PositionStateRole, Serializable {
 	public int getY() {
 		return innerPosition.getY();
 	}
-	
-	@Override
-	public void updateIcon() {
-		innerPosition.updateIcon();
-		
-	}
 
+	@Override
+	public boolean isOnOutsideParcel() {
+		return innerPosition.isOnOutsideParcel();
+	}
 }

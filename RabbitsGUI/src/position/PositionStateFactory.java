@@ -1,9 +1,6 @@
 package position;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-
-public class PositionStateFactory implements PositionStateFactoryRole,Serializable {
+public class PositionStateFactory implements PositionStateFactoryRole {
 
 	@Override
 	public PositionStateRole build(PositionRole innerPosition){

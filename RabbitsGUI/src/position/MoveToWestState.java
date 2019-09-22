@@ -1,8 +1,6 @@
 package position;
 
 import java.io.Serializable;
-
-import GUI.GameView;
 import player.PlayerRole;
 
 public class MoveToWestState implements PositionStateRole, Serializable {
@@ -48,10 +46,9 @@ public class MoveToWestState implements PositionStateRole, Serializable {
 	public int getY() {
 		return innerPosition.getY();
 	}
-	
+
 	@Override
-	public void updateIcon() {
-		innerPosition.updateIcon();
-		
+	public boolean isOnOutsideParcel() {
+		return innerPosition.isOnOutsideParcel();
 	}
 }

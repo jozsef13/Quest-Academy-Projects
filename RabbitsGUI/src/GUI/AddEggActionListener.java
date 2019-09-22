@@ -23,14 +23,16 @@ public class AddEggActionListener implements ActionListener, Serializable {
 
 		for (int i = 1; i < rows + 1; i++) {
 			for (int j = 1; j < columns + 1; j++) {
-				((InsideParcelFrame) fieldGrid[i][j]).removeActionListener();
+					((InsideParcelFrame) fieldGrid[i][j]).removeActionListener();
 			}
 		}
 
 		for (int i = 1; i < rows + 1; i++) {
 			for (int j = 1; j < columns + 1; j++) {
-				((InsideParcelFrame) fieldGrid[i][j]).addActionListener();
-				((InsideParcelFrame) fieldGrid[i][j]).setItemType(eggItem);
+				if(((InsideParcelFrame) fieldGrid[i][j]).isEmpty()) {
+					((InsideParcelFrame) fieldGrid[i][j]).addActionListener();
+					((InsideParcelFrame) fieldGrid[i][j]).setItemType(eggItem);
+				}
 			}
 		}
 	}

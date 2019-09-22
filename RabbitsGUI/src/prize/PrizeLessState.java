@@ -24,4 +24,19 @@ public class PrizeLessState implements PrizeStateRole, Serializable {
 		this.nextState = nextState;
 	}
 
+	@Override
+	public boolean parcelHasPrize() {
+		return false;
+	}
+
+	@Override
+	public String getPrizeType() {
+		return " ";
+	}
+
+	@Override
+	public int getValue() {
+		return 0;
+	}
+
 }

@@ -28,8 +28,24 @@ public interface PositionRole {
 	
 	int getY();
 
-	void updateIcon();
+	void moveNorthWest();
 
-	Color getRandomColor();
+	void moveNorthEast();
+
+	void moveSouthWest();
+
+	void moveSouthEast();
+
+	boolean isOnSouthEastCorner();
+
+	boolean isOnSouthWestCorner();
+
+	boolean isOnNorthEastCorner();
+
+	boolean isOnNorthWestCorner();
+
+	boolean isThePlayerDiagonal();
+
+	boolean isOnOutsideParcel();
 
 }

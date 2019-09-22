@@ -2,8 +2,9 @@ package GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
-public class AddRabbitWithHealthActionListener implements ActionListener {
+public class AddRabbitWithHealthActionListener implements ActionListener,Serializable {
 
 	private int rows;
 	private int columns;
@@ -27,13 +28,17 @@ public class AddRabbitWithHealthActionListener implements ActionListener {
 		}
 
 		for (int i = 1; i < rows + 1; i++) {
-			((InsideParcelFrame) fieldGrid[i][1]).setItemType(rabbitWithHealthItem);
-			((InsideParcelFrame) fieldGrid[i][columns]).setItemType(rabbitWithHealthItem);
+			if(((InsideParcelFrame) fieldGrid[i][1]).isEmpty() || ((InsideParcelFrame) fieldGrid[i][columns]).isEmpty()) {
+				((InsideParcelFrame) fieldGrid[i][1]).setItemType(rabbitWithHealthItem);
+				((InsideParcelFrame) fieldGrid[i][columns]).setItemType(rabbitWithHealthItem);
+			}
 		}
 
 		for (int j = 1; j < columns + 1; j++) {
-			((InsideParcelFrame) fieldGrid[1][j]).setItemType(rabbitWithHealthItem);
-			((InsideParcelFrame) fieldGrid[rows][j]).setItemType(rabbitWithHealthItem);
+			if(((InsideParcelFrame) fieldGrid[1][j]).isEmpty() || ((InsideParcelFrame) fieldGrid[rows][j]).isEmpty()) {
+				((InsideParcelFrame) fieldGrid[1][j]).setItemType(rabbitWithHealthItem);
+				((InsideParcelFrame) fieldGrid[rows][j]).setItemType(rabbitWithHealthItem);
+			}
 		}
 	}
 

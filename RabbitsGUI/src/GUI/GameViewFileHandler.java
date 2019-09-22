@@ -7,8 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import main.Game;
-
 public class GameViewFileHandler implements Serializable{
 	
 	public void saveGameView(GameView gameView) throws IOException {

@@ -1,11 +1,8 @@
 package main;
 
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 
-import GUI.GUIController;
-import GUI.GameViewRole;
 import field.GameFieldFactory;
 import field.GameFieldFactoryRole;
 import field.GameFieldRole;
@@ -21,10 +18,16 @@ import parcel.OutsideParcelFactory;
 import parcel.OutsideParcelFactoryRole;
 import parcel.ParcelFactoryRole;
 import parcel.ParcelRole;
+import parcel.TrapState;
+import parcel.TrapStateRole;
+import parcel.TraplessState;
+import player.EnemyFactoryRole;
+import player.EnemyRole;
 import player.PlayerFactoryRole;
 import player.PlayerRole;
 import player.RabbitFactory;
 import player.RabbitWithHealthFactory;
+import position.DiagonallyPositionStateFactory;
 import position.PositionFactory;
 import position.PositionFactoryRole;
 import position.PositionRole;
@@ -37,6 +40,9 @@ import prize.EggFactory;
 import prize.EggStateFactory;
 import prize.HealthFactory;
 import prize.HealthFactoryRole;
+import prize.HealthStateFactory;
+import prize.LifeFactory;
+import prize.LifeFactoryRole;
 import prize.PrizeFactoryRole;
 import prize.PrizeLessStateFactory;
 import prize.PrizeStateFactoryRole;
@@ -47,83 +53,72 @@ public class GameFactory implements GameFactoryRole, Serializable {
 
 	private int rows;
 	private int columns;
-	private GameViewRole gameView;
 	private PrizeStateRole prizelessState;
 	private ParcelRole[][] parcel;
 	private List<PlayerRole> playersOnField;
-	private BasketFactoryRole basketFactory;
-	private PrizeFactoryRole eggFactory;
-	private GUIController guiController;
-	private HealthFactoryRole healthFactory;
+	private int playerNumber = 0;
+	private List<EnemyRole> enemiesOnField;
 
-	public GameFactory(int rows, int columns, GUIController controller, List<PlayerRole> playersOnField) {
+	public GameFactory(int rows, int columns, List<PlayerRole> playersOnField, List<EnemyRole> otherEnemiesOnField) {
 		super();
 		this.rows = rows;
 		this.columns = columns;
-		this.guiController = controller;
 		this.playersOnField = playersOnField;
+		this.enemiesOnField = otherEnemiesOnField;
 	}
 
 	@Override
 	public Game build(){
 
 		parcel = new ParcelRole[rows + 2][columns + 2];
-
+		
 		addInsideParcel();
 
 		addOutsideParcel();
-
-		basketFactory = new BasketFactory(0);
-		eggFactory = new EggFactory(0);
-		healthFactory = new HealthFactory(1);
+		
+		BasketFactoryRole basketFactory = new BasketFactory(0);
+		PrizeFactoryRole eggFactory = new EggFactory(0);
+		
 		OutputFactoryRole outputFactory = new OutputFactory();
 		OutputRole output = outputFactory.build();
 		GameFieldFactoryRole gameFieldFactory = new GameFieldFactory();
-		GameFieldRole gameField = gameFieldFactory.build(playersOnField, eggFactory, basketFactory);
+		GameFieldRole gameField = gameFieldFactory.build(playersOnField, eggFactory, basketFactory, enemiesOnField);
 		PlayerFieldRole playerField = (PlayerFieldRole) gameField;
 		playerFieldSetter(playerField);
-
+		
 		return new Game(gameField, output, playerField);
 	}
 
 	public void playerFieldSetter(PlayerFieldRole playerField) {
 		
 		for (int i = 0; i <= rows + 1; i++) {
-			parcel[i][columns + 1].setField(playerField);
-			parcel[i][0].setField(playerField);
-		}
-
-		for (int j = 0; j <= columns + 1; j++)
-		{
-			parcel[rows + 1][j].setField(playerField);
-			parcel[0][j].setField(playerField);
+			for (int j = 0; j <= columns + 1; j++) {
+				parcel[i][j].setField(playerField);
+			}
 		}
 	}
 	
 	@Override
-	public void addPalyers(int x, int y){
+	public void addPalyers(int x, int y, int numberOfLifes, PlayerFactoryRole playerFactory){
 		
 		ParcelFieldFactoryRole parcelFieldFactory = new ParcelFieldFactory();
 		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
-		PositionFactoryRole positionFactory = new PositionFactory(parcelField, guiController);
-		PositionStateFactoryRole positionStateFactory = new PositionStateFactory();
-		PlayerFactoryRole rabbitFactory = new RabbitFactory(basketFactory, eggFactory);
-		
+		PositionFactoryRole positionFactory = new PositionFactory(parcelField);
 		PositionRole position = positionFactory.build(x, y);
-		guiController.setRandomColor(position.getRandomColor());
+		PositionStateFactoryRole positionStateFactory;
+		
+		if(position.isThePlayerDiagonal()) {
+			positionStateFactory = new DiagonallyPositionStateFactory();
+		}
+		else {
+			positionStateFactory = new PositionStateFactory();
+		}
+		
 		PositionStateRole positionState = positionStateFactory.build(position);
-		playersOnField.add(rabbitFactory.build(positionState));
-	}
+		PlayerRole player = playerFactory.build(positionState, playerNumber);
+		playersOnField.add(player);
+		playerNumber++;
 	
-	@Override
-	public void addEggs(int prizeX, int prizeY, int prizeValue){
-		
-		PrizeStateFactoryRole eggStateFactory = new EggStateFactory(guiController);
-		
-		PrizeStateRole eggState = eggStateFactory.build(prizeValue);
-		eggState.setNextState(prizelessState);
-		parcel[prizeX][prizeY].setPrizeState(eggState);
-
 	}
 
 	public void addOutsideParcel(){
@@ -153,34 +148,48 @@ public class GameFactory implements GameFactoryRole, Serializable {
 			for (int j = 1; j <= columns; j++) {
 				prizelessState = prizelessStateFactory.build();
 				prizelessState.setNextState(prizelessState);
-				parcel[i][j] = insideParcelFactory.build(prizelessState);
+				TrapStateRole traplessState = new TraplessState();
+				parcel[i][j] = insideParcelFactory.build(prizelessState, traplessState);
 			}
 		}
 	}
 
 	@Override
-	public void addPalyersWithHealth(int x, int y) {
-		ParcelFieldFactoryRole parcelFieldFactory = new ParcelFieldFactory();
-		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
-		PositionFactoryRole positionFactory = new PositionFactory(parcelField, guiController);
-		PositionStateFactoryRole positionStateFactory = new PositionStateFactory();
-		PlayerFactoryRole rabbitWithHealthFactory = new RabbitWithHealthFactory(basketFactory, eggFactory, healthFactory);
-		
-		PositionRole position = positionFactory.build(x, y);
-		guiController.setRandomColor(position.getRandomColor());
-		PositionStateRole positionState = positionStateFactory.build(position);
-		playersOnField.add(rabbitWithHealthFactory.build(positionState));
-		
+	public void addTrap(int x, int y, int damageInflicted) {
+		TrapStateRole trapState = new TrapState(damageInflicted);
+		parcel[x][y].setTrapState(trapState);
+	}
+	
+	@Override
+	public ParcelRole[][] getParcel() {
+		return parcel;
 	}
 
 	@Override
-	public void addHealth(int x, int y, int prizeValue) {
-		PrizeStateFactoryRole healthStateFactory = new HealthStateFactory(guiController);
+	public void addPrize(int x, int y, int prizeValue, PrizeStateFactoryRole prizeFactory) {
+		PrizeStateRole prizeState = prizeFactory.build(prizeValue);
+		prizeState.setNextState(prizelessState);
+		parcel[x][y].setPrizeState(prizeState);
+	}
+
+	@Override
+	public void addEnemyAt(int x, int y, EnemyFactoryRole enemyFactory) {
+		ParcelFieldFactoryRole parcelFieldFactory = new ParcelFieldFactory();
+		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
+		PositionFactoryRole positionFactory = new PositionFactory(parcelField);
+		PositionRole position = positionFactory.build(x, y);
+		PositionStateFactoryRole positionStateFactory;
 		
-		PrizeStateRole healthState = healthStateFactory.build(prizeValue);
-		healthState.setNextState(prizelessState);
-		parcel[x][y].setPrizeState(healthState);
+		if(position.isThePlayerDiagonal()) {
+			positionStateFactory = new DiagonallyPositionStateFactory();
+		}
+		else {
+			positionStateFactory = new PositionStateFactory();
+		}
 		
+		PositionStateRole positionState = positionStateFactory.build(position);
+		EnemyRole enemy = enemyFactory.build(positionState);
+		enemiesOnField.add(enemy);
 	}
 
 }

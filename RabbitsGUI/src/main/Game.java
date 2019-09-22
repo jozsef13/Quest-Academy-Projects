@@ -3,14 +3,11 @@ package main;
 import java.io.Serializable;
 
 import field.GameFieldRole;
-import field.ParcelFieldRole;
 import field.PlayerFieldRole;
 import inout.OutputRole;
 
 public class Game implements Serializable{
-	
-	//private static final long serialVersionUID = 1L;
-	
+		
 	private int numberOfTurns = 0;
 	private GameFieldRole gameField;
 	private OutputRole output;

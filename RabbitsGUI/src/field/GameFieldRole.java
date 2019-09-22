@@ -9,7 +9,5 @@ public interface GameFieldRole{
 	void playTurn();
 
 	void removePlayer(PlayerRole player);
-	
-	int getNumberOfPlayers();
 
 }

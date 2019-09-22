@@ -49,9 +49,8 @@ public class MoveToEastState implements PositionStateRole, Serializable {
 	}
 
 	@Override
-	public void updateIcon() {
-		innerPosition.updateIcon();
-		
+	public boolean isOnOutsideParcel() {
+		return innerPosition.isOnOutsideParcel();
 	}
 
 }

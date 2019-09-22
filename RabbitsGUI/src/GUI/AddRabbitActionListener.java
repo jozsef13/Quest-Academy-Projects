@@ -28,13 +28,17 @@ public class AddRabbitActionListener implements ActionListener, Serializable {
 		}
 
 		for (int i = 1; i < rows + 1; i++) {
-			((InsideParcelFrame) fieldGrid[i][1]).setItemType(rabbitItem);
-			((InsideParcelFrame) fieldGrid[i][columns]).setItemType(rabbitItem);
+			if(((InsideParcelFrame) fieldGrid[i][1]).isEmpty() || ((InsideParcelFrame) fieldGrid[i][columns]).isEmpty()) {
+				((InsideParcelFrame) fieldGrid[i][1]).setItemType(rabbitItem);
+				((InsideParcelFrame) fieldGrid[i][columns]).setItemType(rabbitItem);
+			}
 		}
 
 		for (int j = 1; j < columns + 1; j++) {
-			((InsideParcelFrame) fieldGrid[1][j]).setItemType(rabbitItem);
-			((InsideParcelFrame) fieldGrid[rows][j]).setItemType(rabbitItem);
+			if(((InsideParcelFrame) fieldGrid[1][j]).isEmpty() || ((InsideParcelFrame) fieldGrid[rows][j]).isEmpty()) {
+				((InsideParcelFrame) fieldGrid[1][j]).setItemType(rabbitItem);
+				((InsideParcelFrame) fieldGrid[rows][j]).setItemType(rabbitItem);
+			}
 		}
 	}
 

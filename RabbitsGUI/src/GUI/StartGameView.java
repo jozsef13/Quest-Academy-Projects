@@ -1,20 +1,16 @@
 package GUI;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-
-import main.Game;
 
 public class StartGameView extends JFrame{
 	
@@ -41,7 +37,7 @@ public class StartGameView extends JFrame{
 		panel = new JPanel();
 		
 		getContentPane().add(panel);
-		setSize(500, 150);
+		setBounds(700, 400, 500, 150);
 
 		setNoRows = new JLabel("Enter number of rows: ");
 		panel.add(setNoRows);
@@ -60,27 +56,32 @@ public class StartGameView extends JFrame{
 		create = new JButton("Create field");
 		panel.add(create);
 		setVisible(true);
+		
+		JFrame startView = this;
+		
 		create.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				setVisible(false);
-				int columns = Integer.parseInt(noColumns.getText());
-				int rows = Integer.parseInt(noRows.getText());
-				gameView = controller.createGameView(rows, columns);
-				gameView.setController(controller);
-				gameView.createGameView();
-				//placePlayersView = new PlacePlayersView(controller, gameView);
-				//placePlayersView.createPlayersView(rows, columns);
-				//gameView.setVisible(true);
-				//placePlayersView.setVisible(true);
+
+				try {
+					setVisible(false);
+					int columns = Integer.parseInt(noColumns.getText());
+					int rows = Integer.parseInt(noRows.getText());
+					gameView = controller.createGameView(rows, columns);
+					gameView.setController(controller);
+					gameView.createGameView();
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(startView, "Please type only digits in the fields!", "Number input error!", JOptionPane.ERROR_MESSAGE);
+					setVisible(true);
+				}
 
 			}
 		});
 		
 		loadButton = new JButton("Load Game");
 		panel.add(loadButton);
+		
 		loadButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -90,8 +91,8 @@ public class StartGameView extends JFrame{
 					GameView gameViewNew;
 					gameViewNew = gameViewFileHandler.loadGameView();
 					gameView = gameViewNew;
+					JOptionPane.showMessageDialog(startView, "Successfully loaded!", "Load Game", JOptionPane.INFORMATION_MESSAGE);
 					gameView.setVisible(true);
-					//gameView.createGameView();
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {

@@ -11,53 +11,72 @@ import main.Game;
 
 public class StartTurnActionListener implements ActionListener, Serializable{
 
-	private Game game;
-	private JButton eggButton;
-	private JButton rabbitButton;
 	private int rows;
 	private int columns;
 	private ParcelFrameRole[][] fieldGrid;
 	private JButton startTurn;
 	private JButton getOutput;
+	private JButton rabbitButton;
 	private JButton rabbitWithHealthButton;
+	private JButton eggButton;
+	private JButton trapButton;
 	private JButton healthButton;
+	private JButton saveButton;
+	private GUIController controller;
+	private JButton foxButton;
 
-
-	public StartTurnActionListener(Game game, JButton eggButton, JButton rabbitButton, int rows, int columns,
-			ParcelFrameRole[][] fieldGrid, JButton startTurn, JButton getOutput, JButton rabbitWithHealthButton, JButton healthButton) {
+	public StartTurnActionListener(int rows, int columns, ParcelFrameRole[][] fieldGrid, JButton startTurn,
+			JButton getOutput, JButton rabbitButton, JButton rabbitWithHealthButton, JButton eggButton,
+			JButton trapButton, JButton healthButton, JButton saveButton, GUIController controller, JButton foxButton) {
 		super();
-		this.game = game;
-		this.eggButton = eggButton;
-		this.rabbitButton = rabbitButton;
 		this.rows = rows;
 		this.columns = columns;
 		this.fieldGrid = fieldGrid;
 		this.startTurn = startTurn;
 		this.getOutput = getOutput;
+		this.rabbitButton = rabbitButton;
 		this.rabbitWithHealthButton = rabbitWithHealthButton;
+		this.eggButton = eggButton;
+		this.trapButton = trapButton;
 		this.healthButton = healthButton;
+		this.saveButton = saveButton;
+		this.controller = controller;
+		this.foxButton = foxButton;
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		game.play();
+		controller.clearEnemies();
+		controller.clearPlayers();
+		controller.play();
+		controller.updateGameView();
+		controller.updateInfoTable();
 		
-		eggButton.setEnabled(false);
-		rabbitButton.setEnabled(false);
-		rabbitWithHealthButton.setEnabled(false);
-		healthButton.setEnabled(false);
+		if (controller.theGameIsNotPlayable()) {
+			disableButtons();
+		}
+
 		for (int i = 1; i < rows + 1; i++) {
 			for (int j = 1; j < columns + 1; j++) {
-				((InsideParcelFrame) fieldGrid[i][j]).removeActionListener();
-				((InsideParcelFrame) fieldGrid[i][j]).setEnabledTrue();
+				if(fieldGrid[i][j].isInsideParcel()) {
+					((InsideParcelFrame) fieldGrid[i][j]).setEnabledTrue();
+				}
 			}
-		}
-		if (!game.isPlayable()) {
-			startTurn.setEnabled(false);
-			getOutput.setEnabled(true);
-		}
-		
+		}	
+	}
+
+
+	private void disableButtons() {
+		startTurn.setEnabled(false);
+		getOutput.setEnabled(true);
+		rabbitButton.setEnabled(false);
+		rabbitWithHealthButton.setEnabled(false);
+		eggButton.setEnabled(false);
+		trapButton.setEnabled(false);
+		healthButton.setEnabled(false);
+		saveButton.setEnabled(false);
+		foxButton.setEnabled(false);
 	}
 
 }

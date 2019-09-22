@@ -9,7 +9,7 @@ import GUI.StartGameView;
 
 public class Application {
 
-	private void run() throws FileNotFoundException {
+	public void run() throws FileNotFoundException {
 		
 		GameViewFileHandler gameViewFileHandler = new GameViewFileHandler();
 		GUIController controller = new GUIController(gameViewFileHandler);

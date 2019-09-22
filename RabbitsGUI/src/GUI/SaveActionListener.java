@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 public class SaveActionListener implements ActionListener, Serializable {
 
 	private GameViewFileHandler gameViewFileHandler;
@@ -21,6 +23,7 @@ public class SaveActionListener implements ActionListener, Serializable {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			gameViewFileHandler.saveGameView(gameView);
+			JOptionPane.showMessageDialog(gameView, "Successfully saved!", "Save Game", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

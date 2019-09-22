@@ -1,23 +1,41 @@
 package player;
 
+import java.awt.Color;
 import java.io.Serializable;
+import java.util.Random;
 
 import position.PositionStateRole;
 import prize.BasketRole;
-import prize.PrizeRole;
+import prize.EggRole;
+import prize.HealthRole;
 
 public class Rabbit implements PlayerRole, Serializable {
 
 	private PositionStateRole positionState;
 	private BasketRole basket;
-	private PrizeRole eggs;
-
-	public Rabbit(PositionStateRole positionState, BasketRole basket, PrizeRole eggs) {
+	private EggRole eggs;
+	private int playerNumber;
+	private HealthRole health;
+	private Color randomColor;
+	private String status = "Alive";
+	
+	public Rabbit(PositionStateRole positionState, BasketRole basket, EggRole eggs, int playerNumber, HealthRole health) {
 		super();
 		this.positionState = positionState;
 		this.basket = basket;
 		this.eggs = eggs;
+		this.playerNumber = playerNumber;
+		this.health = health;
+		
+		Random rand = new Random();
+
+		float r = rand.nextFloat();
+		float g = rand.nextFloat();
+		float b = rand.nextFloat();
+
+		randomColor = new Color(r, g, b);
 	}
+
 
 	@Override
 	public void playTurn() {
@@ -33,8 +51,8 @@ public class Rabbit implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public int getEggs() {
-		return eggs.getEggsValue();
+	public int getPrize() {
+		return eggs.getValue();
 	}
 
 	@Override
@@ -53,42 +71,66 @@ public class Rabbit implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public void updateIcon() {
-		positionState.updateIcon();
-		
-	}
-
-	@Override
 	public boolean isDead() {
-		return true;
+		return health.hasNoLifes();
 	}
 
 	@Override
-	public void decreaseHealth() {
-		// nothing
-		
+	public void decreaseHealth(int damage) {
+		health.decreaseHealth(100 - damage + damage);	
 	}
 
 	@Override
 	public void changeDirection() {
-		// nothing
+		//does nothing
 		
 	}
 
 	@Override
 	public void addLife(int value) {
-		// TODO Auto-generated method stub
-		
+		//does nothing 
 	}
 
 	@Override
 	public boolean hasHealth() {
+		return !health.lifeIsOver();
+	}
+
+
+	@Override
+	public String[] setInfoData() {
+		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status };
+		return infoData;
+	}
+
+
+	@Override
+	public Color getRandomColor() {
+		return randomColor;
+	}
+
+
+	@Override
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+
+
+	@Override
+	public String getIcon() {
+		return "src/rabbit.gif";
+	}
+
+
+	@Override
+	public boolean hasSpecialHealth() {
 		return false;
 	}
 
+
 	@Override
-	public void jump() {
-		positionState.move();
+	public void setStatus(String string) {
+		status = string;
 	}
 
 }

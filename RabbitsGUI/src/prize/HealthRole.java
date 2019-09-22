@@ -8,6 +8,10 @@ public interface HealthRole {
 
 	boolean hasNoLifes();
 
-	void decreaseLifes();
+	void decreaseHealth(int damage);
+
+	int getHealthLevel();
+	
+	boolean lifeIsOver();
 
 }

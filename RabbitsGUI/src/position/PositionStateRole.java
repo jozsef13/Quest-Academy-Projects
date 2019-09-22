@@ -18,6 +18,6 @@ public interface PositionStateRole {
 	
 	int getY();
 
-	void updateIcon();
+	boolean isOnOutsideParcel();
 
 }

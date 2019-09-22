@@ -6,7 +6,7 @@ import prize.BasketRole;
 import prize.HealthFactoryRole;
 import prize.HealthRole;
 import prize.PrizeFactoryRole;
-import prize.PrizeRole;
+import prize.EggRole;
 
 public class RabbitWithHealthFactory implements PlayerFactoryRole {
 
@@ -23,11 +23,11 @@ public class RabbitWithHealthFactory implements PlayerFactoryRole {
 	}
 
 	@Override
-	public PlayerRole build(PositionStateRole positionState) {
+	public PlayerRole build(PositionStateRole positionState, int playerNumber) {
 		BasketRole basket = basketFactory.build();
-		PrizeRole eggs = eggPrizeFactory.build();
+		EggRole eggs = eggPrizeFactory.build();
 		HealthRole health = healthPrizeFactory.build();
-		return new RabbitWithHealth(positionState, basket , eggs, health);
+		return new RabbitWithHealth(positionState, basket , eggs, health, playerNumber);
 	}
 
 }

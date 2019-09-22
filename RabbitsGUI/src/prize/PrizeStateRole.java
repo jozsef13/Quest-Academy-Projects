@@ -10,4 +10,10 @@ public interface PrizeStateRole {
 
 	void setNextState(PrizeStateRole nextState);
 
+	boolean parcelHasPrize();
+
+	String getPrizeType();
+
+	int getValue();
+
 }

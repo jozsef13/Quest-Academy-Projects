@@ -2,7 +2,7 @@ package prize;
 
 import java.io.Serializable;
 
-public class Egg implements PrizeRole, Serializable {
+public class Egg implements EggRole, Serializable {
 
 	private int numberOfEggs;
 
@@ -12,12 +12,12 @@ public class Egg implements PrizeRole, Serializable {
 	}
 
 	@Override
-	public int getEggsValue() {
+	public int getValue() {
 		return numberOfEggs;
 	}
 
 	@Override
-	public void setEggsValue(int otherNumberOfEggs) {
+	public void setValue(int otherNumberOfEggs) {
 		numberOfEggs += otherNumberOfEggs;
 	}
 

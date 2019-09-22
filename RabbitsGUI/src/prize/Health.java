@@ -4,28 +4,52 @@ import java.io.Serializable;
 
 public class Health implements HealthRole, Serializable {
 
-	private int numberOfLifes;
+	private LifeRole life;
+	private int healthLevel;
 
-	public Health(int numberOfLifes) {
+	public Health(int value, LifeRole life2) {
 		super();
-		this.numberOfLifes = numberOfLifes;
+		this.life = life2;
+		this.healthLevel = value;
 	}
+	
 	@Override
 	public void addLife(int value) {
-		numberOfLifes += value;
+		life.add(value);
 	}
 
 	@Override
 	public int getLifes() {
-		return numberOfLifes;
+		return life.getNumberOfLifes();
 	}
+	
 	@Override
 	public boolean hasNoLifes() {
-		return numberOfLifes <= 0;
+		return life.noLifes();
 	}
+	
 	@Override
-	public void decreaseLifes() {
-		numberOfLifes--;
+	public void decreaseHealth(int damage) {
+		takeDamage(damage);
+		if(lifeIsOver()) {
+			life.decreaseNumberOfLifes();
+			if(!life.noLifes())
+				healthLevel = 100;
+		}
+	}
+	
+	@Override
+	public boolean lifeIsOver() {
+		return healthLevel <= 0;
+	}
+	
+	private void takeDamage(int damage) {
+		healthLevel -= damage;
+	}
+	
+	@Override
+	public int getHealthLevel() {
+		return healthLevel;
 	}
 
 }

@@ -3,25 +3,17 @@ package GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.util.Random;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
-public class InsideParcelFrame extends JButton implements ParcelFrameRole, ParcelFieldActionRole, ActionListener {
+public class InsideParcelFrame extends JButton implements ParcelFrameRole, ParcelFrameActionRole, ActionListener {
 
 	private ItemTypeRole itemType;
 	private GUIController controller;
 	private int x;
 	private int y;
+	private int state = 0;
 	
 	public InsideParcelFrame() {
 		setBackground(Color.white);
@@ -29,14 +21,14 @@ public class InsideParcelFrame extends JButton implements ParcelFrameRole, Parce
 	}
 
 	@Override
-	public void addPlayers(String imageFile, Color randomColor) {
+	public void addPlayers(String imageFile, Color randomColor, int playerNumber) {
 		setBackground(randomColor);
 		Icon playerIcon = new ImageIcon(imageFile);
 		setIcon(playerIcon);
+		setText(Integer.toString(playerNumber));
 		setDisabledIcon(playerIcon);
-		setVisible(true);
+		setVisible(true);	
 	}
-
 
 	@Override
 	public void addPrizes(String prizeValue, String imageFile) {	
@@ -52,22 +44,26 @@ public class InsideParcelFrame extends JButton implements ParcelFrameRole, Parce
 	public void clearPlayer() {
 		setBackground(Color.white);
 		setIcon(null);
+		setText(" ");
+		setEmptyState();
 		setVisible(true);
+		
+	}
+	
+	private void setEmptyState() {
+		state = 0;
 	}
 	
 	@Override
-	public void clearPrize() {
-		setBackground(Color.white);
-		setIcon(null);
-		setText("X");
+	public void actionPerformed(ActionEvent e) {
+		itemType.set(x, y, controller);
+		removeActionListener();
+		setFullState();
 		setVisible(true);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		itemType.set(x, y, controller);
-		setEnabled(false);
-		setVisible(true);
+	private void setFullState() {
+		state = 1;
 	}
 
 	@Override
@@ -100,10 +96,29 @@ public class InsideParcelFrame extends JButton implements ParcelFrameRole, Parce
 	public void setEnabledTrue() {
 		setEnabled(true);
 	}
+	
+	@Override
+	public void addTrap(String damage) {
+		setBackground(Color.white);
+		setText("T " + damage);
+		setVisible(true);
+	}
 
-	public void updateHealthIcon(String filename) {
-		Icon healthIcon = new ImageIcon(filename);
-		setIcon(healthIcon);
-		setDisabledIcon(healthIcon);
+	@Override
+	public boolean isInsideParcel() {
+		return true;
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return state == 0;
+	}
+
+	public void addEnemy(String enemyIcon) {
+		setBackground(Color.white);
+		Icon enemyIconImage = new ImageIcon(enemyIcon);
+		setIcon(enemyIconImage);
+		setDisabledIcon(enemyIconImage);
+		setVisible(true);
 	}
 }

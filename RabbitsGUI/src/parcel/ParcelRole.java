@@ -12,4 +12,16 @@ public interface ParcelRole {
 	
 	void setField(PlayerFieldRole field);
 
+	void setTrapState(TrapStateRole otherTrapState);
+
+	boolean hasTrap();
+
+	String trapDamage();
+
+	boolean hasPrize();
+
+	String prizeType();
+
+	int prizeValue();
+
 }

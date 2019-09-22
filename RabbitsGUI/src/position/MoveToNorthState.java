@@ -48,10 +48,10 @@ public class MoveToNorthState implements PositionStateRole, Serializable {
 	public int getY() {
 		return innerPosition.getY();
 	}
-
+	
 	@Override
-	public void updateIcon() {
-		innerPosition.updateIcon();
-		
+	public boolean isOnOutsideParcel() {
+		return innerPosition.isOnOutsideParcel();
 	}
+
 }

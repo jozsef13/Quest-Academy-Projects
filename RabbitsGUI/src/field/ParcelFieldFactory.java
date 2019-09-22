@@ -1,11 +1,8 @@
 package field;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-
 import parcel.ParcelRole;
 
-public class ParcelFieldFactory implements ParcelFieldFactoryRole,Serializable {
+public class ParcelFieldFactory implements ParcelFieldFactoryRole {
 
 	@Override
 	public ParcelFieldRole build(ParcelRole[][] parcel){

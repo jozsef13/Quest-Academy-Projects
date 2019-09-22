@@ -1,17 +1,22 @@
 package prize;
 
-public class HealthFactory implements HealthFactoryRole {
+import java.io.Serializable;
 
-	private int numberOfLifes;
+public class HealthFactory implements HealthFactoryRole, Serializable {
 
-	public HealthFactory(int numberOfLifes) {
+	private int healthLevel;
+	private LifeFactoryRole lifeFactory;
+
+	public HealthFactory(int healthLevel, LifeFactoryRole lifeFactory) {
 		super();
-		this.numberOfLifes = numberOfLifes;
+		this.healthLevel = healthLevel;
+		this.lifeFactory = lifeFactory;
 	}
 
 	@Override
 	public HealthRole build() {
-		return new Health(numberOfLifes);
+		LifeRole life = lifeFactory.build();
+		return new Health(healthLevel , life);
 	}
 
 }

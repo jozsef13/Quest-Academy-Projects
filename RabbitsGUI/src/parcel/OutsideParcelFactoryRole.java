@@ -1,8 +1,8 @@
 package parcel;
 
-import java.io.FileNotFoundException;
+import GUI.GUIController;
 
 public interface OutsideParcelFactoryRole {
-	
+
 	ParcelRole build();
 }

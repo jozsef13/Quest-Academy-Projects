@@ -12,7 +12,7 @@ public class EggFactory implements PrizeFactoryRole, Serializable {
 	}
 
 	@Override
-	public PrizeRole build() {
+	public EggRole build() {
 		return new Egg(numberOfEggs);
 	}
 

@@ -1,8 +1,6 @@
 package prize;
 
-import java.io.Serializable;
-
-public class PrizeLessStateFactory implements PrizelessStateFactoryRole,Serializable {
+public class PrizeLessStateFactory implements PrizelessStateFactoryRole {
 
 	@Override
 	public PrizeStateRole build() {

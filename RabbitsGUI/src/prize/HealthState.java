@@ -8,14 +8,12 @@ import player.PlayerRole;
 public class HealthState implements PrizeStateRole, Serializable {
 	
 	private PrizeStateRole nextState;
-	private GUIController controller;
-	private int value;
+	private int numberOfLives;
 	private PrizeStateRole auxNextState;
 	
-	public HealthState(GUIController controller, int value) {
+	public HealthState(int value) {
 		super();
-		this.controller = controller;
-		this.value = value;
+		this.numberOfLives = value;
 	}
 
 	@Override
@@ -31,17 +29,30 @@ public class HealthState implements PrizeStateRole, Serializable {
 
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
-		if(player.hasHealth())
+		if(!player.hasSpecialHealth())
 		{
-			player.addLife(value);
-			controller.clearPrizeAt(player.getX(), player.getY());
+			player.addLife(numberOfLives);
 			nextState = auxNextState;
 		}
 		else
 		{
-			player.jump();
 			nextState = this;
 		}
+	}
+
+	@Override
+	public boolean parcelHasPrize() {
+		return true;
+	}
+
+	@Override
+	public String getPrizeType() {
+		return "src/health.gif";
+	}
+
+	@Override
+	public int getValue() {
+		return numberOfLives;
 	}
 
 }

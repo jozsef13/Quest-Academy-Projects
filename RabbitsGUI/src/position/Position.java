@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Random;
 
 import GUI.GUIController;
-import GUI.GameViewRole;
 import field.ParcelFieldRole;
 import player.PlayerRole;
 
@@ -14,23 +13,12 @@ public class Position implements PositionRole, Serializable {
 	private int x;
 	private int y;
 	private ParcelFieldRole field;
-	private Color randomColor;
-	private GUIController controller;
 
-	public Position(int x, int y, ParcelFieldRole field, GUIController otherController) {
+	public Position(int x, int y, ParcelFieldRole field) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.field = field;
-		this.controller = otherController;
-		
-		Random rand = new Random();
-
-		float r = rand.nextFloat();
-		float g = rand.nextFloat();
-		float b = rand.nextFloat();
-
-		randomColor = new Color(r, g, b);
 	}
 
 	public int getX() {
@@ -48,25 +36,21 @@ public class Position implements PositionRole, Serializable {
 
 	@Override
 	public void moveSouth() {
-		controller.clearPlayerAt(x, y);
 		x++;
 	}
 
 	@Override
 	public void moveNorth() {
-		controller.clearPlayerAt(x, y);
 		x--;
 	}
 
 	@Override
 	public void moveEast() {
-		controller.clearPlayerAt(x, y);
 		y++;
 	}
 
 	@Override
 	public void moveWest() {
-		controller.clearPlayerAt(x, y);
 		y--;
 	}
 
@@ -91,13 +75,57 @@ public class Position implements PositionRole, Serializable {
 	}
 
 	@Override
-	public void updateIcon() {
-		controller.addPlayersOnGameView(x, y, randomColor);
-	}
-	
-	@Override
-	public Color getRandomColor() {
-		return randomColor;
+	public void moveNorthWest() {
+		x--;
+		y--;
 	}
 
+	@Override
+	public void moveNorthEast() {
+		x--;
+		y++;
+	}
+
+	@Override
+	public void moveSouthWest() {
+		x++;
+		y--;
+	}
+
+	@Override
+	public void moveSouthEast() {
+		x++;
+		y++;
+	}
+
+	@Override
+	public boolean isOnSouthEastCorner() {
+		return x == field.getMaxX() && y == field.getMaxY();
+	}
+
+	@Override
+	public boolean isOnSouthWestCorner() {
+		return x == field.getMaxX() && y == 1;
+	}
+
+	@Override
+	public boolean isOnNorthEastCorner() {
+		return x == 1 && y == field.getMaxY();
+	}
+
+	@Override
+	public boolean isOnNorthWestCorner() {
+		return x == 1 && y == 1;
+	}
+
+	@Override
+	public boolean isThePlayerDiagonal() {
+		return isOnSouthEastCorner() || isOnSouthWestCorner() || isOnNorthWestCorner() || isOnNorthEastCorner();
+	}
+
+	@Override
+	public boolean isOnOutsideParcel() {
+		return x == 0 || y == 0 || x > field.getMaxX() || y > field.getMaxY();
+	}
+	
 }

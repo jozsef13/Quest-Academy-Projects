@@ -18,14 +18,16 @@ public class Rabbit implements PlayerRole, Serializable {
 	private HealthRole health;
 	private Color randomColor;
 	private String status = "Alive";
+	private InvincibilityRole invincibility;
 	
-	public Rabbit(PositionStateRole positionState, BasketRole basket, EggRole eggs, int playerNumber, HealthRole health) {
+	public Rabbit(PositionStateRole positionState, BasketRole basket, EggRole eggs, int playerNumber, HealthRole health, InvincibilityRole otherInvincibility) {
 		super();
 		this.positionState = positionState;
 		this.basket = basket;
 		this.eggs = eggs;
 		this.playerNumber = playerNumber;
 		this.health = health;
+		this.invincibility = otherInvincibility;
 		
 		Random rand = new Random();
 
@@ -82,8 +84,7 @@ public class Rabbit implements PlayerRole, Serializable {
 
 	@Override
 	public void changeDirection() {
-		//does nothing
-		
+		positionState = positionState.next().next();
 	}
 
 	@Override
@@ -99,7 +100,7 @@ public class Rabbit implements PlayerRole, Serializable {
 
 	@Override
 	public String[] setInfoData() {
-		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status };
+		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status, invincibility.getStatus() };
 		return infoData;
 	}
 
@@ -129,8 +130,26 @@ public class Rabbit implements PlayerRole, Serializable {
 
 
 	@Override
-	public void setStatus(String string) {
-		status = string;
+	public void setStatus(String otherStatus) {
+		status = otherStatus;
+	}
+
+
+	@Override
+	public void setInvincibility(boolean otherInvincibility) {
+		invincibility.set(otherInvincibility);
+	}
+
+
+	@Override
+	public boolean isNotInvincible() {
+		return invincibility.isNotActive();
+	}
+
+
+	@Override
+	public void setInvincibilityStatus(String otherInvincibilityStatus) {
+		invincibility.setPlayerStatus(otherInvincibilityStatus);
 	}
 
 }

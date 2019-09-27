@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.Random;
 
+import player.InvincibilityFactory;
+import player.InvincibilityFactoryRole;
 import player.PlayerFactoryRole;
 import player.RabbitFactory;
 import prize.BasketFactory;
@@ -23,7 +25,8 @@ public class RabbitItem implements ItemTypeRole, Serializable{
 		PrizeFactoryRole eggFactory = new EggFactory(0);
 		LifeFactoryRole lifeFactory = new LifeFactory(1);
 		HealthFactoryRole healthFactory = new HealthFactory(100, lifeFactory );
-		PlayerFactoryRole rabbitFactory = new RabbitFactory(basketFactory, eggFactory, healthFactory);
+		InvincibilityFactoryRole invincibilityFactory = new InvincibilityFactory();
+		PlayerFactoryRole rabbitFactory = new RabbitFactory(basketFactory, eggFactory, healthFactory, invincibilityFactory);
 		controller.addPlayersOnGame(x, y, 1, "src/rabbit.gif", rabbitFactory);
 	}
 

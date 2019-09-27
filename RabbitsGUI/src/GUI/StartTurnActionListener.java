@@ -24,10 +24,11 @@ public class StartTurnActionListener implements ActionListener, Serializable{
 	private JButton saveButton;
 	private GUIController controller;
 	private JButton foxButton;
+	private JButton carrotButton;
 
 	public StartTurnActionListener(int rows, int columns, ParcelFrameRole[][] fieldGrid, JButton startTurn,
 			JButton getOutput, JButton rabbitButton, JButton rabbitWithHealthButton, JButton eggButton,
-			JButton trapButton, JButton healthButton, JButton saveButton, GUIController controller, JButton foxButton) {
+			JButton trapButton, JButton healthButton, JButton saveButton, GUIController controller, JButton foxButton, JButton otherCarrotButton) {
 		super();
 		this.rows = rows;
 		this.columns = columns;
@@ -42,6 +43,7 @@ public class StartTurnActionListener implements ActionListener, Serializable{
 		this.saveButton = saveButton;
 		this.controller = controller;
 		this.foxButton = foxButton;
+		this.carrotButton = otherCarrotButton;
 	}
 
 
@@ -77,6 +79,7 @@ public class StartTurnActionListener implements ActionListener, Serializable{
 		healthButton.setEnabled(false);
 		saveButton.setEnabled(false);
 		foxButton.setEnabled(false);
+		carrotButton.setEnabled(false);
 	}
 
 }

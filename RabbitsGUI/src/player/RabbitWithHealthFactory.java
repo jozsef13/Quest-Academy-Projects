@@ -13,13 +13,15 @@ public class RabbitWithHealthFactory implements PlayerFactoryRole {
 	private BasketFactoryRole basketFactory;
 	private PrizeFactoryRole eggPrizeFactory;
 	private HealthFactoryRole healthPrizeFactory;
+	private InvincibilityFactoryRole invincibilityFactory;
 
 	public RabbitWithHealthFactory(BasketFactoryRole basketFactory, PrizeFactoryRole eggPrizeFactory,
-			HealthFactoryRole healthPrizeFactory) {
+			HealthFactoryRole healthPrizeFactory, InvincibilityFactoryRole otherInvincibilityFactory) {
 		super();
 		this.basketFactory = basketFactory;
 		this.eggPrizeFactory = eggPrizeFactory;
 		this.healthPrizeFactory = healthPrizeFactory;
+		this.invincibilityFactory = otherInvincibilityFactory;
 	}
 
 	@Override
@@ -27,7 +29,8 @@ public class RabbitWithHealthFactory implements PlayerFactoryRole {
 		BasketRole basket = basketFactory.build();
 		EggRole eggs = eggPrizeFactory.build();
 		HealthRole health = healthPrizeFactory.build();
-		return new RabbitWithHealth(positionState, basket , eggs, health, playerNumber);
+		InvincibilityRole invincibility = invincibilityFactory.build();
+		return new RabbitWithHealth(positionState, basket , eggs, health, playerNumber, invincibility);
 	}
 
 }

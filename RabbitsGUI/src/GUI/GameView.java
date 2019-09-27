@@ -56,6 +56,8 @@ public class GameView extends JFrame {
 	private JScrollPane scrollPane;
 	private JButton foxButton;
 	private ActionListener addFoxButton;
+	private JButton carrotButton;
+	private ActionListener addCarrotAction;
 
 	public GameView(int columns, int rows, GameViewFileHandler gameViewFileHandler) throws HeadlessException {
 		super();
@@ -162,6 +164,14 @@ public class GameView extends JFrame {
 		addTrapAction = new AddTrapActionListener(rows, columns, fieldGrid);
 		trapButton.addActionListener(addTrapAction);
 		
+		carrotButton = new JButton("Carrot");
+		constraint.fill = GridBagConstraints.HORIZONTAL;
+		constraint.gridx = 3;
+		constraint.gridy = 1;
+		controlPanel.add(carrotButton, constraint);
+		addCarrotAction = new AddCarrotActionListener(rows, columns, fieldGrid);
+		carrotButton.addActionListener(addCarrotAction);
+		
 		saveButton = new JButton("Save Game");
 		constraint.fill = GridBagConstraints.HORIZONTAL;
 		constraint.gridx = 0;
@@ -178,7 +188,7 @@ public class GameView extends JFrame {
 		restartAction = new RestartActionListener(this, controller);
 		restartButton.addActionListener(restartAction);
 		
-		startTurnAction = new StartTurnActionListener(rows, columns, fieldGrid, startTurn, getOutput, rabbitButton, rabbitWithHealthButton, eggButton, trapButton, healthButton, saveButton, controller, foxButton);
+		startTurnAction = new StartTurnActionListener(rows, columns, fieldGrid, startTurn, getOutput, rabbitButton, rabbitWithHealthButton, eggButton, trapButton, healthButton, saveButton, controller, foxButton, carrotButton);
 		startTurn.addActionListener(startTurnAction);
 		
 		getOuputAction = new AddOutputActionListener(game);
@@ -188,7 +198,7 @@ public class GameView extends JFrame {
 		constraint.gridy++;
 		controlPanel.add(new JLabel(" "), constraint);
 		
-		String[] tableHead = {"Player", "Prizes", "Points" , "Lives", "Health", "Status"};
+		String[] tableHead = {"Player", "Prizes", "Points" , "Lives", "Health", "Status", "Invincible"};
 		defaultTable = new DefaultTableModel(tableHead , 0);
 		table = new JTable(defaultTable);
 		scrollPane = new JScrollPane(table);
@@ -215,8 +225,8 @@ public class GameView extends JFrame {
 		controller = controller2;
 	}
 
-	public void addTrapAt(int x, int y, String damage) {
-		((InsideParcelFrame) fieldGrid[x][y]).addTrap(damage);
+	public void addTrapAt(int x, int y, String damage, String imageIcon) {
+		((InsideParcelFrame) fieldGrid[x][y]).addTrap(damage, imageIcon);
 		setVisible(true);
 	}
 
@@ -231,6 +241,7 @@ public class GameView extends JFrame {
 		defaultTable.setValueAt(infoData[3], Integer.parseInt(infoData[0]), 3);
 		defaultTable.setValueAt(infoData[4], Integer.parseInt(infoData[0]), 4);
 		defaultTable.setValueAt(infoData[5], Integer.parseInt(infoData[0]), 5);
+		defaultTable.setValueAt(infoData[6], Integer.parseInt(infoData[0]), 6);
 	}
 
 	public void addPrizeAt(int x, int y, int prizeValue, String prizeIcon) {

@@ -2,8 +2,6 @@ package player;
 
 import java.io.Serializable;
 
-import com.sun.source.doctree.SerialDataTree;
-
 import position.PositionStateRole;
 
 public class Fox implements EnemyRole, Serializable{

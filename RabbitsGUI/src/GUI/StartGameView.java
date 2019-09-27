@@ -96,7 +96,8 @@ public class StartGameView extends JFrame{
 				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(startView, "There is no saved game!", "Load game error!", JOptionPane.ERROR_MESSAGE);
+					setVisible(true);
 				}
 			}
 		});

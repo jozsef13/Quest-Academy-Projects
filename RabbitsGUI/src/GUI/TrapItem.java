@@ -43,7 +43,7 @@ public class TrapItem extends JFrame implements ItemTypeRole, Serializable {
 				try {
 					trapValue = Integer.parseInt(trapValueText.getText());
 					trapValueText.setText("");
-					controller.addTrapsAt(x, y, trapValue);
+					controller.addTrapsAt(x, y, trapValue, "src/trap.gif");
 					setVisible(false);
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(trapView, "Please type only digits in the fields!", "Number input error!", JOptionPane.ERROR_MESSAGE);

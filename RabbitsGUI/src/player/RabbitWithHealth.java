@@ -18,14 +18,16 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 	private int playerNumber;
 	private Color randomColor;
 	private String status = "Alive";
+	private InvincibilityRole invincibility;
 
-	public RabbitWithHealth(PositionStateRole positionState, BasketRole basket, EggRole eggs, HealthRole health, int playerNumber2) {
+	public RabbitWithHealth(PositionStateRole positionState, BasketRole basket, EggRole eggs, HealthRole health, int playerNumber2, InvincibilityRole otherInvincibility) {
 		super();
 		this.positionState = positionState;
 		this.basket = basket;
 		this.eggs = eggs;
 		this.health = health;
 		this.playerNumber = playerNumber2;
+		this.invincibility = otherInvincibility;
 		
 		Random rand = new Random();
 
@@ -97,8 +99,7 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 
 	@Override
 	public String[] setInfoData() {
-		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status};
-		
+		String[] infoData = {Integer.toString(playerNumber), Integer.toString(getPrize()), Integer.toString(getBasket()), Integer.toString(health.getLifes()), Integer.toString(health.getHealthLevel()), status, invincibility.getStatus() };
 		return infoData;
 	}
 	
@@ -123,7 +124,24 @@ public class RabbitWithHealth implements PlayerRole, Serializable {
 	}
 
 	@Override
-	public void setStatus(String string) {
-		status = string;
+	public void setStatus(String otherStatus) {
+		status = otherStatus;
+	}
+	
+	@Override
+	public void setInvincibility(boolean otherInvincibility) {
+		invincibility.set(otherInvincibility);
+	}
+
+
+	@Override
+	public boolean isNotInvincible() {
+		return invincibility.isNotActive();
+	}
+
+
+	@Override
+	public void setInvincibilityStatus(String otherInvincibilityStatus) {
+		invincibility.setPlayerStatus(otherInvincibilityStatus);
 	}
 }

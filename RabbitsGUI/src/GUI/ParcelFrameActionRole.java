@@ -17,8 +17,8 @@ public interface ParcelFrameActionRole {
 	void removeActionListener();
 
 	void setEnabledTrue();
-
-	void addTrap(String damage);
 	
 	boolean isEmpty();
+
+	void addTrap(String damage, String imageIcon);
 }

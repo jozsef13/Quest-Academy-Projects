@@ -29,7 +29,7 @@ public class HealthState implements PrizeStateRole, Serializable {
 
 	@Override
 	public void searchForPrizeBy(PlayerRole player) {
-		if(!player.hasSpecialHealth())
+		if(player.hasSpecialHealth())
 		{
 			player.addLife(numberOfLives);
 			nextState = auxNextState;

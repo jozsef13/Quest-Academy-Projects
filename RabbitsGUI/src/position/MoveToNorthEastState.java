@@ -1,8 +1,9 @@
 package position;
 
+import java.io.Serializable;
 import player.PlayerRole;
 
-public class MoveToNorthEastState implements PositionStateRole {
+public class MoveToNorthEastState implements PositionStateRole, Serializable {
 
 	private PositionRole innerPosition;
 	private PositionStateRole nextState;

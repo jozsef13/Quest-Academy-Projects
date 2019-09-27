@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import player.InvincibilityFactory;
+import player.InvincibilityFactoryRole;
 import player.PlayerFactoryRole;
 import player.RabbitWithHealth;
 import player.RabbitWithHealthFactory;
@@ -59,7 +61,8 @@ public class RabbitWithHealthItem extends JFrame implements ItemTypeRole, Serial
 					PrizeFactoryRole eggFactory = new EggFactory(0);
 					LifeFactoryRole lifeFactory = new LifeFactory(numberOfLives);
 					HealthFactoryRole healthFactory = new HealthFactory(100, lifeFactory );
-					PlayerFactoryRole rabbitWithHealthFactory = new RabbitWithHealthFactory(basketFactory, eggFactory, healthFactory);
+					InvincibilityFactoryRole invincibilityFactory = new InvincibilityFactory();
+					PlayerFactoryRole rabbitWithHealthFactory = new RabbitWithHealthFactory(basketFactory, eggFactory, healthFactory, invincibilityFactory);
 					controller.addPlayersOnGame(x, y, numberOfLives, "src/rabbitHealth.gif", rabbitWithHealthFactory  );
 					setVisible(false);
 				} catch (NumberFormatException ex) {

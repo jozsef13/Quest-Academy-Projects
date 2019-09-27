@@ -18,7 +18,6 @@ public class SaveActionListener implements ActionListener, Serializable {
 		this.gameView = gameView;
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
@@ -28,5 +27,4 @@ public class SaveActionListener implements ActionListener, Serializable {
 			e1.printStackTrace();
 		}
 	}
-
 }

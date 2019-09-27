@@ -28,7 +28,15 @@ public class InsideParcel implements ParcelRole, Serializable{
 		
 		if(trapState.parcelHasTrap())
 		{
-			trapState.takeHealth(player);
+			if(player.isNotInvincible())
+			{
+				trapState.takeHealth(player);				
+			}
+			else
+			{
+				player.setInvincibilityStatus("No");
+				player.setInvincibility(false);
+			}
 			
 			if(player.isDead())
 			{

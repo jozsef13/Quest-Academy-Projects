@@ -44,7 +44,16 @@ public class GameField implements GameFieldRole, PlayerFieldRole, Serializable {
 			for (EnemyRole enemy : cloneEnemies) {
 				if(enemy.isOnSameParcelWith(player))
 				{
-					enemy.takeHealth(player);
+					if(player.isNotInvincible())
+					{
+						enemy.takeHealth(player);						
+					}
+					else
+					{
+						removeEnemy(enemy);
+						player.setInvincibilityStatus("No");
+						player.setInvincibility(false);
+					}
 				}
 			}
 			
@@ -54,6 +63,10 @@ public class GameField implements GameFieldRole, PlayerFieldRole, Serializable {
 				removePlayer(player);
 			}
 		}
+	}
+
+	private void removeEnemy(EnemyRole enemy) {
+		enemies.remove(enemy);
 	}
 
 	@Override

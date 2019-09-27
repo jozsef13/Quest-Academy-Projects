@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class InsideParcelFrame extends JButton implements ParcelFrameRole, ParcelFrameActionRole, ActionListener {
 
@@ -56,10 +57,15 @@ public class InsideParcelFrame extends JButton implements ParcelFrameRole, Parce
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		itemType.set(x, y, controller);
-		removeActionListener();
-		setFullState();
-		setVisible(true);
+		try {
+			itemType.set(x, y, controller);
+			removeActionListener();
+			setFullState();
+			setVisible(true);
+		} catch (NullPointerException itemType) {
+			JOptionPane.showMessageDialog(this, "Please select what you want to add before!", "Object error!", JOptionPane.ERROR_MESSAGE);
+			setVisible(true);
+		}
 	}
 
 	private void setFullState() {
@@ -98,9 +104,11 @@ public class InsideParcelFrame extends JButton implements ParcelFrameRole, Parce
 	}
 	
 	@Override
-	public void addTrap(String damage) {
+	public void addTrap(String damage, String imageIcon) {
 		setBackground(Color.white);
-		setText("T " + damage);
+		Icon trapIcon = new ImageIcon(imageIcon);
+		setIcon(trapIcon);
+		setText(damage);
 		setVisible(true);
 	}
 

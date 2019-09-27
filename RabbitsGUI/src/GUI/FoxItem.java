@@ -1,9 +1,11 @@
 package GUI;
 
+import java.io.Serializable;
+
 import player.EnemyFactoryRole;
 import player.FoxFactory;
 
-public class FoxItem implements ItemTypeRole {
+public class FoxItem implements ItemTypeRole, Serializable {
 
 	@Override
 	public void set(int x, int y, GUIController controller) {

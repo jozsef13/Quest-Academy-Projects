@@ -38,4 +38,10 @@ public interface PlayerRole {
 
 	void setStatus(String string);
 
+	void setInvincibility(boolean otherInvincibility);
+
+	boolean isNotInvincible();
+
+	void setInvincibilityStatus(String string);
+
 }

@@ -178,16 +178,9 @@ public class GameFactory implements GameFactoryRole, Serializable {
 		ParcelFieldRole parcelField = parcelFieldFactory.build(parcel);
 		PositionFactoryRole positionFactory = new PositionFactory(parcelField);
 		PositionRole position = positionFactory.build(x, y);
-		PositionStateFactoryRole positionStateFactory;
+		PositionStateFactoryRole randomPositionStateFactory = new RandomPositionStateFactory();
 		
-		if(position.isThePlayerDiagonal()) {
-			positionStateFactory = new DiagonallyPositionStateFactory();
-		}
-		else {
-			positionStateFactory = new PositionStateFactory();
-		}
-		
-		PositionStateRole positionState = positionStateFactory.build(position);
+		PositionStateRole positionState = randomPositionStateFactory.build(position);
 		EnemyRole enemy = enemyFactory.build(positionState);
 		enemiesOnField.add(enemy);
 	}

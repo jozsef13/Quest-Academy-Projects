@@ -30,7 +30,7 @@ public class GUIController implements Serializable {
 		super();
 		this.gameViewFileHandler = gameViewFileHandler;
 		allPlayersOnField = new ArrayList<PlayerRole>();
-		infoData = new String[6]; 
+		infoData = new String[7]; 
 	}
 	
 	public void setParcel(ParcelRole[][] parcel) {
@@ -59,9 +59,9 @@ public class GUIController implements Serializable {
 		addRowsToTable();	
 	}
 
-	public void addTrapsAt(int x, int y, int damageInflicted) {
+	public void addTrapsAt(int x, int y, int damageInflicted, String imageIcon) {
 		gameFactory.addTrap(x, y, damageInflicted);
-		gameView.addTrapAt(x, y, Integer.toString(damageInflicted));
+		gameView.addTrapAt(x, y, Integer.toString(damageInflicted), imageIcon);
 	}
 
 	public void addRowsToTable() {
@@ -81,7 +81,7 @@ public class GUIController implements Serializable {
 	}
 
 	public void updateTrapOnGameView(int x, int y, String damage) {
-		gameView.addTrapAt(x, y, damage);
+		gameView.addTrapAt(x, y, damage,"src/trap.gif");
 	}
 
 	public void updateGameView() {

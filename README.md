@@ -13,4 +13,4 @@ The final project, eMAG Hero, it is also a mini-game, where a fight between our 
 and a monster, which has some attributes, is simulated until one of them remains without life.
 
 
-All this projects were done using OOP references and Design Patterns.
+All this projects were done using OOP references and Design Patterns. More informations about these problem can be found in their directories where the problem statement is written in a pdf or word file.

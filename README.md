@@ -1,4 +1,4 @@
-# Quest-Projects
+# Quest-Academy-Projects
 Projects using Design Patterns!
 
 The problem Rabbit is a mini-game which involves players, as rabbits, which are moving on a field where they can find prizes. Each rabbit 
